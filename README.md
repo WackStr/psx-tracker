@@ -17,3 +17,13 @@ The services defined in this repository will help solve this challenge.
 - given funds to invest, what purchasing (given that we can buy whole number shares) improves the index tracking
 - if a user wants to sell shares to get a certain amount, what mix of shares will help achieve that amount while improving or minimally imapcting the index tracking
 
+
+## Architecture
+
+- FastAPI
+- Celery
+- BeautifulSoup
+- Uvicorn
+- Tortoise ORM
+- Pydantic
+- Redis
