@@ -30,3 +30,4 @@ The user need to not worry about tracking things. They just input the investment
 - Tortoise ORM
 - Pydantic
 - Redis
+- Postgres
