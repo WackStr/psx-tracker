@@ -24,12 +24,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DB_HOST: "db"
-      DB_PORT: "5432"
-      DB_USER: "${POSTGRES_USER}"
-      DB_PASSWORD: "${POSTGRES_PASSWORD}"
-      DB_NAME: "${POSTGRES_DB}"
-
+      - FLYWAY_USER=${POSTGRES_USER}
+      - FLYWAY_PASSWORD=${POSTGRES_PASSWORD}
+      - FLYWAY_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
 volumes:
   db_data:
         

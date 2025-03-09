@@ -1,14 +1,26 @@
+FROM flyway/flyway:latest AS flyway-stage
+
 FROM python:3.12.2-slim
 
-WORKDIR /app
+# Install Java runtime so Flyway can run
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
 
-# To leverage docker layers
+COPY --from=flyway-stage /flyway /flyway
+
+ENV PATH="/flyway:${PATH}"
+
+COPY flyway.conf /flyway/conf/flyway.conf
+
 COPY requirements.txt .
-
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY . /app
+WORKDIR /app
+
+RUN chmod +x ./prestart.sh
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["./prestart.sh"]
