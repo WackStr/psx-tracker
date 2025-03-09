@@ -31,3 +31,4 @@ The user need to not worry about tracking things. They just input the investment
 - Pydantic
 - Redis
 - Postgres
+- Flyway
