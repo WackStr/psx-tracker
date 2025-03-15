@@ -27,7 +27,7 @@ The user need to not worry about tracking things. They just input the investment
 - Celery
 - BeautifulSoup
 - Uvicorn
-- Tortoise ORM
+- SQLAlchemy
 - Pydantic
 - Redis
 - Postgres
