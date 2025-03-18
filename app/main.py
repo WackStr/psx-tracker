@@ -9,4 +9,4 @@ app = FastAPI()
 @app.get("/share-price/{script}")
 async def get_share_price(script: str, db: Session  = Depends(get_db)):
     """get_price_of_share"""
-    return db.query(share_price).all()
+    return db.query(share_price).filter(share_price.company_script == script).all()
