@@ -1,10 +1,8 @@
-from fastapi import FastAPI, Depends
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routes import auth, share, user
 
-from .database import get_db
-from .models.share_price import share_price
 
 app = FastAPI()
 
@@ -18,7 +16,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-@app.get("/share-price/{script}")
-async def get_share_price(script: str, db: Session  = Depends(get_db)):
-    """get_price_of_share"""
-    return db.query(share_price).filter(share_price.company_script == script).all()
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
+app.include_router(share.router, prefix="/share", tags=["auth"])
+app.include_router(user.router, prefix="/users", tags=["users"])

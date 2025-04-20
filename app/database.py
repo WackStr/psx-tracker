@@ -3,10 +3,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
+from app.config import settings
 
-db_user = os.environ["POSTGRES_USER"]
-db_password = os.environ["POSTGRES_PASSWORD"]
-db_name = os.environ["POSTGRES_DB"]
+
+db_user = settings.POSTGRES_USER
+db_password = settings.POSTGRES_PASSWORD
+db_name = settings.POSTGRES_DB
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{db_user}:{db_password}@db/{db_name}"
 
