@@ -16,7 +16,8 @@ services:
       timeout: 5s
       retries: 5
   psx-tracker:
-    build: .
+    build: 
+      context: .
     container_name: python_psx_tracker
     depends_on:
       db:
@@ -29,6 +30,14 @@ services:
       - FLYWAY_USER=${POSTGRES_USER}
       - FLYWAY_PASSWORD=${POSTGRES_PASSWORD}
       - FLYWAY_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /app
+          ignore:
+            - .git/
+            - __pycache__/
+            - "*.pyc"
 volumes:
-  db_data:
-        
+  db_data: 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Header
 from sqlalchemy.orm import Session
 import bcrypt
 
@@ -33,3 +33,20 @@ def refresh_token(refresh_token: str):
         
         new_access_token = create_access_token(data={"sub": username})
         return {"access_token": new_access_token, "token_type": "bearer"}
+    
+@router.post("/verify")
+def validate_token(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Authorization header missing")
+    
+    try:
+        scheme, token = authorization.split()
+        if scheme.lower() != "bearer":
+            raise HTTPException(status_code=401, detail="Invalid authentication scheme")
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid authorization header format")
+    
+    payload = verify_token(token)
+    if payload:
+        return {"valid": True}
+    raise HTTPException(status_code=401, detail="Invalid token")
